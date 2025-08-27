@@ -1,6 +1,7 @@
 ﻿using FCG_Common.Domain.Exceptions;
 using FCG_Common.Domain.Extensions;
 using FCG_Users.Application.Converters;
+using FCG_Users.Application.Validators;
 using FCG_Users.Application.Validators.User;
 using FCG_Users.Domain.DTO.Auth;
 using FCG_Users.Domain.DTO.User;
@@ -16,15 +17,17 @@ public class AuthService : IAuthService
 	private readonly IUserRepository _userRepository;
 	private readonly ITokenService _tokenService;
 	private readonly IPasswordService _passwordService;
+	private readonly IApplicationUserService _applicationUserService;
 
-	public AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordService passwordService)
-	{
-		_userRepository = userRepository;
-		_tokenService = tokenService;
-		_passwordService = passwordService;
-	}
+    public AuthService(IUserRepository userRepository, ITokenService tokenService, IPasswordService passwordService, IApplicationUserService applicationUserService)
+    {
+        _userRepository = userRepository;
+        _tokenService = tokenService;
+        _passwordService = passwordService;
+        _applicationUserService = applicationUserService;
+    }
 
-	public async Task<string> Login(LoginDto dto)
+    public async Task<string> Login(LoginDto dto)
 	{
 		var user = await _userRepository.GetBy(u => u.Email == dto.Email);
 
@@ -49,5 +52,22 @@ public class AuthService : IAuthService
 		var newUser = dto.ToUser(hashedPassword);
 
 		await _userRepository.CreateAsync(newUser);
+	}
+
+	public async Task ChangePassword(ChangePasswordDto dto)
+	{
+		var user = await _userRepository.GetByIdAsync(_applicationUserService.GetUserId());
+
+		if (!_passwordService.VerifyHashedPassword(user!.Password, dto.CurrentPassword))
+			throw new DomainException("Incorrect current password.");
+
+		var validPassword = PasswordValidator.Validate(dto.NewPassword);
+
+		if (!validPassword)
+			throw new DomainException("The password must contain at least one uppercase letter, one lowercase letter, one special character and one number.");
+
+		user.Password = _passwordService.HashPassword(dto.NewPassword);
+
+		await _userRepository.UpdateAsync(user);
 	}
 }

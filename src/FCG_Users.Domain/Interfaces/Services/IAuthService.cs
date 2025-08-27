@@ -8,4 +8,5 @@ public interface IAuthService
 {
     Task SignUp(CreateUserDto dto, IConfiguration configuration);
     Task<string> Login(LoginDto dto);
+    Task ChangePassword(ChangePasswordDto dto);
 }

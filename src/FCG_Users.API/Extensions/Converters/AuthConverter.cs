@@ -7,4 +7,7 @@ public static class AuthConverter
 {
     public static LoginDto ToDto(this LoginRequest request)
         => new(request.Email, request.Password);
+
+    public static ChangePasswordDto ToDto(this ChangePasswordRequest request)
+        => new(request.CurrentPassword, request.NewPassword);
 }

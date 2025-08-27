@@ -34,5 +34,18 @@ public static class AuthEndpoints
         })
         .Produces(StatusCodes.Status201Created)
         .Produces(StatusCodes.Status400BadRequest);
+
+        group.MapPatch("/change-password", async (ChangePasswordRequest request, IAuthService authService) =>
+        {
+            var dto = request.ToDto();
+
+            await authService.ChangePassword(dto);
+
+            return Results.NoContent();
+        })
+        .RequireAuthorization()
+        .Produces(StatusCodes.Status204NoContent)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status401Unauthorized);
     }
 }
