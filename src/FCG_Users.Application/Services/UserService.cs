@@ -10,35 +10,35 @@ namespace FCG_Users.Application.Services;
 
 public class UserService : IUserService
 {
-	private readonly IUserRepository _userRepositoryy;
+	private readonly IUserRepository _userRepository;
 	private readonly IApplicationUserService _applicationUserService;
 
-	public UserService(IUserRepository userRepositoryy, IApplicationUserService applicationUserService)
+	public UserService(IUserRepository userRepository, IApplicationUserService applicationUserService)
 	{
-		_userRepositoryy = userRepositoryy;
+		_userRepository = userRepository;
 		_applicationUserService = applicationUserService;
 	}
 	public async Task<UserDto?> GetByIdAsync(Guid id)
 	{
-		var user = await _userRepositoryy.GetByIdAsync(id);
+		var user = await _userRepository.GetByIdAsync(id);
 
 		return user?.ToDto() ?? throw new NotFoundException(nameof(User), id);
 	}
 
 	public async Task<ICollection<UserDto>> GetAllAsync()
-		=> (await _userRepositoryy.GetAllAsync()).ToDtoList();
+		=> (await _userRepository.GetAllAsync()).ToDtoList();
 
-	public async Task ChengeRoleAsync(Guid id)
+	public async Task ChangeRoleAsync(Guid id)
 	{
 		if (_applicationUserService.GetUserId() == id)
 			throw new DomainException("Cannot change own role.");
 
-		var user = await _userRepositoryy.GetByIdAsync(id) ?? throw new NotFoundException(nameof(User), id);
+		var user = await _userRepository.GetByIdAsync(id) ?? throw new NotFoundException(nameof(User), id);
 
 		user.Role = user.Role == UserRole.Admin
 			? UserRole.Common
 			: UserRole.Admin;
 
-		await _userRepositoryy.UpdateAsync(user);
+		await _userRepository.UpdateAsync(user);
 	}
 }

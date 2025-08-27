@@ -6,5 +6,5 @@ public interface IUserService
 {
     Task<UserDto?> GetByIdAsync(Guid id);
     Task<ICollection<UserDto>> GetAllAsync();
-    Task ChengeRoleAsync(Guid id);
+    Task ChangeRoleAsync(Guid id);
 }
