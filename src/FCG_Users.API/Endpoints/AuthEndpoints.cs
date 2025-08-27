@@ -23,7 +23,7 @@ public static class AuthEndpoints
             return Results.Ok(new TokenResponse(token));
         })
         .Produces<TokenResponse>(StatusCodes.Status200OK)
-        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized);
+        .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/signup", async (CreateUserRequest request, IAuthService authService, IConfiguration configuration) =>
         {
@@ -47,6 +47,6 @@ public static class AuthEndpoints
         .RequireAuthorization()
         .Produces(StatusCodes.Status204NoContent)
         .Produces<ErrorResponse>(StatusCodes.Status400BadRequest)
-        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized);
+        .Produces(StatusCodes.Status401Unauthorized);
     }
 }

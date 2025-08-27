@@ -24,8 +24,8 @@ public static class UserEndpoints
         })
         .Produces<GetUserByIdResponse>(StatusCodes.Status200OK)
         .Produces<ErrorResponse>(StatusCodes.Status404NotFound)
-        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized)
-        .Produces<ErrorResponse>(StatusCodes.Status403Forbidden);
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden);
 
         group.MapGet("", async (IUserService userService) =>
         {
@@ -45,8 +45,8 @@ public static class UserEndpoints
         })
         .Produces(StatusCodes.Status204NoContent)
         .Produces<ErrorResponse>(StatusCodes.Status404NotFound)
-        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized)
-        .Produces<ErrorResponse>(StatusCodes.Status403Forbidden)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden)
         .Produces<ErrorResponse>(StatusCodes.Status400BadRequest);
     }
 }
