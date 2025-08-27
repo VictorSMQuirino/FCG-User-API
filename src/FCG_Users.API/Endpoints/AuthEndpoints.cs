@@ -1,3 +1,4 @@
+using FCG_Common.Api.Responses;
 using FCG_Users.API.Extensions.Converters;
 using FCG_Users.API.Requests.Auth;
 using FCG_Users.API.Requests.User;
@@ -22,7 +23,7 @@ public static class AuthEndpoints
             return Results.Ok(new TokenResponse(token));
         })
         .Produces<TokenResponse>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status401Unauthorized);
+        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized);
 
         group.MapPost("/signup", async (CreateUserRequest request, IAuthService authService, IConfiguration configuration) =>
         {
@@ -33,7 +34,7 @@ public static class AuthEndpoints
             return Results.Created();
         })
         .Produces(StatusCodes.Status201Created)
-        .Produces(StatusCodes.Status400BadRequest);
+        .Produces<ErrorResponse>(StatusCodes.Status400BadRequest);
 
         group.MapPatch("/change-password", async (ChangePasswordRequest request, IAuthService authService) =>
         {
@@ -45,7 +46,7 @@ public static class AuthEndpoints
         })
         .RequireAuthorization()
         .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status400BadRequest)
-        .Produces(StatusCodes.Status401Unauthorized);
+        .Produces<ErrorResponse>(StatusCodes.Status400BadRequest)
+        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized);
     }
 }

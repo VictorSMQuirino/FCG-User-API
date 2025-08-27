@@ -1,3 +1,4 @@
+using FCG_Common.Api.Responses;
 using FCG_Users.API.Extensions.Converters;
 using FCG_Users.API.Responses.User;
 using FCG_Users.Domain.Enums;
@@ -22,9 +23,9 @@ public static class UserEndpoints
             return Results.Ok(dto?.ToResponse());
         })
         .Produces<GetUserByIdResponse>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound)
-        .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status403Forbidden);
+        .Produces<ErrorResponse>(StatusCodes.Status404NotFound)
+        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized)
+        .Produces<ErrorResponse>(StatusCodes.Status403Forbidden);
 
         group.MapGet("", async (IUserService userService) =>
         {
@@ -33,8 +34,8 @@ public static class UserEndpoints
             return Results.Ok(dtoList.ToResponse());
         })
         .Produces<ICollection<GetUserByIdResponse>>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status403Forbidden);
+        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized)
+        .Produces<ErrorResponse>(StatusCodes.Status403Forbidden);
 
         group.MapPatch("{id:guid}/change-role", async (Guid id, IUserService userService) =>
         {
@@ -43,9 +44,9 @@ public static class UserEndpoints
             return Results.NoContent();
         })
         .Produces(StatusCodes.Status204NoContent)
-        .Produces(StatusCodes.Status404NotFound)
-        .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status403Forbidden)
-        .Produces(StatusCodes.Status400BadRequest);
+        .Produces<ErrorResponse>(StatusCodes.Status404NotFound)
+        .Produces<ErrorResponse>(StatusCodes.Status401Unauthorized)
+        .Produces<ErrorResponse>(StatusCodes.Status403Forbidden)
+        .Produces<ErrorResponse>(StatusCodes.Status400BadRequest);
     }
 }
