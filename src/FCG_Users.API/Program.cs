@@ -7,6 +7,8 @@ using FCG_Users.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureHealthCheck(builder.Configuration);
+
 builder.Services.ConfigureAuthentication(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();

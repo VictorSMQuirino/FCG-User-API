@@ -1,5 +1,6 @@
 using FCG_Users.Application.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FCG_Users.API.Config;
@@ -36,4 +37,17 @@ public static class ApiConfiguration
 
         return services;
     }
+
+    public static IServiceCollection ConfigureHealthCheck(this IServiceCollection services, IConfiguration configuration)
+    {
+		services.AddHealthChecks()
+	    .AddNpgSql(
+		    configuration.GetConnectionString("DefaultConnection")!,
+		    name: "PostgreSQL",
+		    failureStatus: HealthStatus.Unhealthy,
+		    tags: ["database", "postgres"]
+	    );
+
+        return services;
+	}
 }
