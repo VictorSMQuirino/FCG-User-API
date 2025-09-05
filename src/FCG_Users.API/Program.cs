@@ -4,6 +4,7 @@ using FCG_Users.API.Config;
 using FCG_Users.API.Endpoints;
 using FCG_Users.Application;
 using FCG_Users.Infrastructure;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,8 @@ builder.Services.ConfigureSwagger();
 
 var app = builder.Build();
 
+app.UseHttpMetrics();
+
 await SeedConfig.SeedDatabase(app.Services, app.Configuration);
 
 app.UseExceptionHandler();
@@ -36,11 +39,18 @@ if (app.Environment.IsDevelopment())
 	app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+	app.UseHttpsRedirection();
+}
+
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapAllApiEndpoints();
+
+app.MapMetrics();
 
 app.Run();
