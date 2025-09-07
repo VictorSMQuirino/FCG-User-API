@@ -28,6 +28,9 @@ stages:
             inputs:
               packageType: sdk
               version: '$(dotnetSdkVersion)'
+
+          - task: NuGetAuthenticate@1
+            displayName: 'Authenticate with Azure Artifacts'
           
           - task: DotNetCoreCLI@2
             displayName: 'Restore dependencies'
@@ -40,7 +43,7 @@ stages:
             inputs:
               command: build
               projects: '**/*.sln'
-              arguments: '--configuration $(buildConfiguration)'
+              arguments: '--configuration $(buildConfiguration) --no-restore'
 
   - stage: Test
     displayName: '2. Run Unit Tests'
@@ -60,4 +63,4 @@ stages:
           inputs:
             command: test
             projects: 'tests/FCG_Users.Tests/FCG_Users.Tests.csproj'
-            arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect""XPlat Code Coverage"'
+            arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect "XPlat Code Coverage"'
