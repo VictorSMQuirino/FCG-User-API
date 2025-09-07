@@ -23,6 +23,17 @@ stages:
       - job: 'BuildJob'
         displayName: 'Build'
         steps:
+          - script: |
+              echo "Verificando a estrutura de arquivos..."
+              ls -R
+            displayName: '1. List Files in Workspace'
+
+          - script: |
+              echo "Mostrando o conteúdo do nuget.config..."
+              cat nuget.config
+            displayName: '2. Show nuget.config content'
+            continueOnError: true
+
           - task: UseDotNet@2
             displayName: 'Setup .NET 8'
             inputs:
@@ -37,6 +48,7 @@ stages:
             inputs:
               command: restore
               projects: '**/*.sln'
+              arguments: '--verbosity detailed'
 
           - task: DotNetCoreCLI@2
             displayName: 'Build project'
