@@ -35,7 +35,7 @@ stages:
               command: restore
               projects: '**/*.sln'
               feedsToUse: select
-              vstsFeed: 'RM361756/My_Packages'
+              vstsFeed: 'FCG User API/My_Packages'
 
           - task: DotNetCoreCLI@2
             displayName: 'Build project'
