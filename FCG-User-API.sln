@@ -17,6 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - Tests", "02 - Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCG_Users.Tests", "tests\FCG_Users.Tests\FCG_Users.Tests.csproj", "{40800A55-A002-4DD2-B9D9-955A9D55C0EA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Items", "03 - Items", "{12A2AC48-A350-4ECA-AF2E-3DB9D0D85150}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
