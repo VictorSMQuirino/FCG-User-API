@@ -35,11 +35,8 @@ stages:
             env:
               NUGET_PAT: $(NUGET_PAT)
           
-          - task: DotNetCoreCLI@2
+          - script: dotnet restore FCG-User-API.sln
             displayName: 'Restore dependencies'
-            inputs:
-              command: restore
-              projects: '**/*.sln'
 
           - task: DotNetCoreCLI@2
             displayName: 'Build project'
