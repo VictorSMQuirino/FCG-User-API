@@ -28,14 +28,18 @@ stages:
             inputs:
               packageType: sdk
               version: '$(dotnetSdkVersion)'
+
+          - script: |
+              dotnet nuget update source "My_Packages" --username "az" --password "$(NUGET_PAT)" --store-password-in-clear-text --configfile "nuget.config"
+            displayName: 'Inject PAT credentials for NuGet'
+            env:
+              NUGET_PAT: $(NUGET_PAT)
           
           - task: DotNetCoreCLI@2
             displayName: 'Restore dependencies'
             inputs:
               command: restore
               projects: '**/*.sln'
-              feedsToUse: select
-              vstsFeed: 'FCG User API/My_Packages'
 
           - task: DotNetCoreCLI@2
             displayName: 'Build project'
