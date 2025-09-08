@@ -30,7 +30,7 @@ stages:
               version: '$(dotnetSdkVersion)'
 
           - script: |
-              dotnet nuget update source "My_Packages" --username "az" --password "$(NUGET_PAT)" --store-password-in-clear-text --configfile "nuget.config"
+              dotnet nuget update source "My_Packages" --username "az" --password "$NUGET_PAT" --store-password-in-clear-text --configfile "nuget.config"
             displayName: 'Inject PAT credentials for NuGet'
             env:
               NUGET_PAT: $(NUGET_PAT)
