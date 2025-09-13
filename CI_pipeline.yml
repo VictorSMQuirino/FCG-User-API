@@ -60,4 +60,4 @@ stages:
           inputs:
             command: test
             projects: 'tests/FCG_Users.Tests/FCG_Users.Tests.csproj'
-            arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect""XPlat Code Coverage"'
+            arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect"XPlat Code Coverage"'
