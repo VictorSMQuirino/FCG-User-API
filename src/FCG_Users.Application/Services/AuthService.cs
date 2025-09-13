@@ -1,11 +1,11 @@
-﻿using FCG_Common.Domain.Exceptions;
-using FCG_Common.Domain.Extensions;
-using FCG_Users.Application.Converters;
+﻿using FCG_Users.Application.Converters;
 using FCG_Users.Application.Validators;
 using FCG_Users.Application.Validators.User;
 using FCG_Users.Domain.DTO.Auth;
 using FCG_Users.Domain.DTO.User;
 using FCG_Users.Domain.Entities;
+using FCG_Users.Domain.Exceptions;
+using FCG_Users.Domain.Extensions;
 using FCG_Users.Domain.Interfaces.Repositories;
 using FCG_Users.Domain.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +32,7 @@ public class AuthService : IAuthService
 		var user = await _userRepository.GetBy(u => u.Email == dto.Email);
 
 		if (user is null || !_passwordService.VerifyHashedPassword(user.Password, dto.Password))
-			throw new InvalidCredentialException();
+			throw new InvalidCredentialsException();
 
 		return _tokenService.GenerateToken(user);
 	}
@@ -41,7 +41,7 @@ public class AuthService : IAuthService
 	{
 		var validationResult = await new CreateUserValidator().ValidateAsync(dto);
 
-		if (!validationResult.IsValid) throw new ValidationErrorsException(validationResult.Errors.ToErrorsPropertyDictionary());
+		if (!validationResult.IsValid) throw new ValidationErrorException(validationResult.Errors.ToErrorsPropectyDictionary());
 
 		var alreadyExistsUserWithEmail = await _userRepository.ExistsBy(user => user.Email == dto.Email);
 

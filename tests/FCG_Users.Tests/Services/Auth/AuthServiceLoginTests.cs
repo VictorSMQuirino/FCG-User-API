@@ -1,5 +1,5 @@
-﻿using FCG_Common.Domain.Exceptions;
-using FCG_Users.Domain.Entities;
+﻿using FCG_Users.Domain.Entities;
+using FCG_Users.Domain.Exceptions;
 using FCG_Users.Tests.Fixtures;
 using FluentAssertions;
 using Moq;
@@ -67,7 +67,7 @@ public class AuthServiceLoginTests : AuthServiceTests
 		var act = async () => await _service.Login(dto);
 
 		//Assert
-		await Assert.ThrowsAsync<InvalidCredentialException>(act);
+		await Assert.ThrowsAsync<InvalidCredentialsException>(act);
 		OnValidationAssert(Times.Never, Times.Never);
 	}
 
@@ -90,7 +90,7 @@ public class AuthServiceLoginTests : AuthServiceTests
 		var act = async () => await _service.Login(dto);
 
 		//Assert
-		await Assert.ThrowsAsync<InvalidCredentialException>(act);
+		await Assert.ThrowsAsync<InvalidCredentialsException>(act);
 		OnValidationAssert(Times.Once, Times.Never);
 	}
 }

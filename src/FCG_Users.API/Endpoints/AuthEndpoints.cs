@@ -1,7 +1,7 @@
-using FCG_Common.Api.Responses;
 using FCG_Users.API.Extensions.Converters;
 using FCG_Users.API.Requests.Auth;
 using FCG_Users.API.Requests.User;
+using FCG_Users.API.Responses;
 using FCG_Users.API.Responses.Auth;
 using FCG_Users.Domain.Interfaces.Services;
 

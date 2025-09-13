@@ -1,5 +1,4 @@
-﻿using FCG_Common.Domain.Entities;
-using FCG_Users.Domain.Enums;
+﻿using FCG_Users.Domain.Enums;
 
 namespace FCG_Users.Domain.Entities;
 

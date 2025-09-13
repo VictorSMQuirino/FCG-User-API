@@ -1,6 +1,6 @@
-﻿using FCG_Common.Domain.Exceptions;
-using FCG_Users.Domain.DTO.Auth;
+﻿using FCG_Users.Domain.DTO.Auth;
 using FCG_Users.Domain.Entities;
+using FCG_Users.Domain.Exceptions;
 using FCG_Users.Tests.Fixtures;
 using Moq;
 

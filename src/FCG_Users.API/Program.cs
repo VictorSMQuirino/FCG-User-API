@@ -1,7 +1,7 @@
-using FCG_Common.Api.Middlewares;
 using FCG_Users.API;
 using FCG_Users.API.Config;
 using FCG_Users.API.Endpoints;
+using FCG_Users.API.Middlewares;
 using FCG_Users.Application;
 using FCG_Users.Infrastructure;
 using Prometheus;
@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddProblemDetails();
-builder.Services.AddExceptionHandler<ExceptionHaandlingMiddleware>();
+builder.Services.AddExceptionHandler<ExceptionHandlingMiddleware>();
 
 builder.Services.AddApiServices();
 builder.Services.AddApplicationServices();
@@ -53,4 +53,4 @@ app.MapAllApiEndpoints();
 
 app.MapMetrics();
 
-app.Run();
+await app.RunAsync();

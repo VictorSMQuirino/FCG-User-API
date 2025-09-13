@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FCG-Common.Domain" Version="1.0.0-CI-20250827-150525" />
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
   </ItemGroup>
 

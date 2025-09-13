@@ -1,5 +1,10 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
+  tags:
+    exclude:
+      - '*'
 
 pr:
   - main
@@ -24,58 +29,35 @@ stages:
               packageType: sdk
               version: '$(dotnetSdkVersion)'
           
-          - task: bash@3
-            displayName: 'Create authenticated nuget.config'
-            inputs:
-              targetType: 'inline'
-              script: |
-                echo "Creating nuget.config file with embedded credentials..."
-                cat > nuget.config << EOL
-                <?xml version="1.0" encoding="utf-8"?>
-                <configuration>
-                  <packageSources>
-                    <clear />
-                    <add key="My_Packages" value="https://pkgs.dev.azure.com/RM361756/FCG%20User%20API/_packaging/My_Packages/nuget/v3/index.json" />
-                    <add key="nuget.org" value="https://api.nuget.org/v3/index.json" />
-                  </packageSources>
-                  <packageSourceCredentials>
-                    <My_Packages>
-                      <add key="Username" value="az" />
-                      <add key="ClearTextPassword" value="${NUGET_PAT}" />
-                    </My_Packages>
-                  </packageSourceCredentials>
-                </configuration>
-                EOL
-                echo "Authenticated nuget.config created successfully."
-            env:
-              NUGET_PAT: $(NUGET_PAT)
-
-          - script: dotnet restore FCG-User-API.sln
+          - task: DotNetCoreCLI@2
             displayName: 'Restore dependencies'
+            inputs:
+              command: restore
+              projects: '**/*.sln'
 
           - task: DotNetCoreCLI@2
             displayName: 'Build project'
             inputs:
               command: build
               projects: '**/*.sln'
-              arguments: '--configuration $(buildConfiguration) --no-restore'
+              arguments: '--configuration $(buildConfiguration)'
 
   - stage: Test
     displayName: '2. Run Unit Tests'
     dependsOn: Build
     jobs:
-      - job: TestJob
-        displayName: 'Execute Unit Tests'
-        steps:
-          - task: UseDotNet@2
-            displayName: 'Setup .NET 8'
-            inputs:
-              packageType: sdk
-              version: '$(dotnetSdkVersion)'
+    - job: TestJob
+      displayName: Execute Unit Tests
+      steps:
+        - task: UseDotNet@2
+          displayName: 'Setup .NET 8'
+          inputs:
+            packageType: sdk
+            version: '$(dotnetSdkVersion)'
 
-          - task: DotNetCoreCLI@2
-            displayName: 'Run unit tests'
-            inputs:
-              command: test
-              projects: 'tests/FCG_Users.Tests/FCG_Users.Tests.csproj'
-              arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect "XPlat Code Coverage"'
+        - task: DotNetCoreCLI@2
+          displayName: 'Run unit tests'
+          inputs:
+            command: test
+            projects: 'tests/FCG_Users.Tests/FCG_Users.Tests.csproj'
+            arguments: '--configuration $(buildConfiguration) --settings coverlat.runsettings --collect""XPlat Code Coverage"'

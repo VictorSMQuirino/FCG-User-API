@@ -1,5 +1,5 @@
-﻿using FCG_Common.Domain.Exceptions;
-using FCG_Users.Domain.Entities;
+﻿using FCG_Users.Domain.Entities;
+using FCG_Users.Domain.Exceptions;
 using FCG_Users.Tests.Fixtures;
 using Moq;
 using System.Linq.Expressions;
@@ -57,7 +57,7 @@ public class AuthServiceSignUpTests : AuthServiceTests
 		var act = async () => await _service.SignUp(dto, _configuration);
 
 		//Assert
-		await Assert.ThrowsAsync<ValidationErrorsException>(act);
+		await Assert.ThrowsAsync<ValidationErrorException>(act);
 		OnValidationAssert(Times.Never, Times.Never, Times.Never);
 	}
 

@@ -1,8 +1,8 @@
-﻿using FCG_Common.Domain.Exceptions;
-using FCG_Users.Application.Converters;
+﻿using FCG_Users.Application.Converters;
 using FCG_Users.Domain.DTO.User;
 using FCG_Users.Domain.Entities;
 using FCG_Users.Domain.Enums;
+using FCG_Users.Domain.Exceptions;
 using FCG_Users.Domain.Interfaces.Repositories;
 using FCG_Users.Domain.Interfaces.Services;
 

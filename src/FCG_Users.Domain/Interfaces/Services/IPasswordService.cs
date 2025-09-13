@@ -1,5 +1,3 @@
-using System;
-
 namespace FCG_Users.Domain.Interfaces.Services;
 
 public interface IPasswordService

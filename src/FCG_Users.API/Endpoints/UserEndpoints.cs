@@ -1,5 +1,5 @@
-using FCG_Common.Api.Responses;
 using FCG_Users.API.Extensions.Converters;
+using FCG_Users.API.Responses;
 using FCG_Users.API.Responses.User;
 using FCG_Users.Domain.Enums;
 using FCG_Users.Domain.Interfaces.Services;
