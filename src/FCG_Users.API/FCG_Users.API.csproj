@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>019aa7bd-0b7a-4e97-ba1e-a1136651b351</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,12 @@
     <ProjectReference Include="..\FCG_Users.Application\FCG_Users.Application.csproj" />
     <ProjectReference Include="..\FCG_Users.Domain\FCG_Users.Domain.csproj" />
     <ProjectReference Include="..\FCG_Users.Infrastructure\FCG_Users.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

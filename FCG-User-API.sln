@@ -19,6 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FCG_Users.Tests", "tests\FC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - Items", "03 - Items", "{12A2AC48-A350-4ECA-AF2E-3DB9D0D85150}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
 		.gitignore = .gitignore
 		CI_pipeline.yml = CI_pipeline.yml
 		README.md = README.md
