@@ -12,7 +12,7 @@ variables:
   dockerfilePath: 'src/FIAP_CloudGames.API/Dockerfile'
 
 pool:
-name: 'Default'
+  name: 'Default'
 
 stages:
 - stage: Build_and_Push_Docker_Image
