@@ -6,10 +6,16 @@ trigger:
 pr: none
 
 variables:
+  #ACR
   dockerRegistryServiceConnection: 'ACRConnection'
   imageRepository: 'fcg-users'
   containerRegistry: 'fiapcloudgamesregistry.azurecr.io'
   dockerfilePath: 'src/FCG_Users.API/Dockerfile'
+
+  #ACA
+  azureSubscriptionConnection: 'AzureSubscriptionConnection'
+  resourceGroupName: 'FCG'
+  containerAppName: 'aca-fcg-users'
 
 pool:
   name: 'Default'
@@ -32,3 +38,24 @@ stages:
         tags: |
           $(Build.SourceBranchName)
           latest
+
+- stage: Deploy_to_ACA
+  displayName: '2. Deploy to Azure Container App'
+  dependsOn: Build_and_Push_Docker_Image
+  jobs:
+  - job: DeployJob
+    displayName: 'Update and Start Container App'
+    steps:
+    - task: AzureCLI@2
+      displayName: 'Deploy to Azure Container App'
+      inputs:
+        azureSubscription: $(azureSubscriptionConnection)
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          echo "Updating Azure Container App and ensuring it is ruinning..."
+          az containerapp update \
+            --name $(containerAppName) \
+            --resource-group $(resourceGroupName) \
+            --image $(containerRegistry)/$(imageRepository):$(Build.SourceBranchName) \
+            --min-replicas 1
