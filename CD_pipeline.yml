@@ -9,7 +9,7 @@ variables:
   dockerRegistryServiceConnection: 'ACRConnection'
   imageRepository: 'fcg-users'
   containerRegistry: 'fiapcloudgamesregistry.azurecr.io'
-  dockerfilePath: 'src/FIAP_CloudGames.API/Dockerfile'
+  dockerfilePath: 'src/FCG_Users.API/Dockerfile'
 
 pool:
   name: 'Default'
